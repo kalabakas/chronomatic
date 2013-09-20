@@ -14,6 +14,10 @@ return array(
 			'password' => '',
 			'charset' => 'utf8',
 		),
+        'europeana' => array(
+            'key'    => '------',
+            'secret' => '------'
+        ),
 		*/
     )
 );

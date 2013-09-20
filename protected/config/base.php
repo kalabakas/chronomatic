@@ -40,6 +40,9 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
+        'europeana' => array(
+            'class' => 'ext.europeana.EEuropeana',
+        ),
 		// uncomment the following to enable URLs in path-format
 		/*
 		'urlManager'=>array(
