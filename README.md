@@ -11,6 +11,9 @@ Create thematic timelines with open data!
 * cp protected/config/main-example.php protected/config/main.php
 * edit main.php (db credentials/europeana api)
 
+* ~$ php composer.phar install
+  
+
 ##Developer documentation
 
 * [Yii Bootstrap](http://www.cniska.net/yii-bootstrap/index.html)

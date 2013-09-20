@@ -1,4 +1,6 @@
 /assets/
+/vendor/
+composer.lock
 protected/runtime/
 protected/config/main.php
 /protected/data/testdrive.db

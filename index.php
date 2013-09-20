@@ -1,4 +1,6 @@
 <?php
+require 'vendor/autoload.php';
+
 date_default_timezone_set('Europe/Athens');
 // change the following paths if necessary
 require_once dirname(__FILE__).'/lib/yii/framework/yii.php';
