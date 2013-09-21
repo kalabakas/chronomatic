@@ -8,9 +8,13 @@ class SearchController extends Controller
 
         if(isset($_POST['EEuropeanaSearch'])) {
             $model->attributes = $_POST['EEuropeanaSearch'];
+<<<<<<< HEAD
 	    if ($model->validate()){
-            $data = Yii::app()->europeana->search($model);
+            	echo $model;die;
 	    }
+=======
+            $data = Yii::app()->europeana->search($model);
+>>>>>>> 5389412a5c2de0f665816f041a100155e3b0d269
         }
 		$this->render('index', array(
             'model' => $model,

@@ -26,6 +26,8 @@ class EEuropeanaSearch extends CFormModel
 	    array('imageOnly', 'boolean')
         );
     }
+<<<<<<< HEAD
+
     public function __toString() {
 	$subject= ($this->type == '*') ? '' : $this->type.':' ;
  	$query='query='.$subject.$this->term;
@@ -36,5 +38,10 @@ class EEuropeanaSearch extends CFormModel
 	    $params.='&TYPE:IMAGE';
     	};
 	return $params;
+=======
+    public function __toString()
+    {
+        return http_build_query(array('query'=>$this->term));
+>>>>>>> 5389412a5c2de0f665816f041a100155e3b0d269
     }
 }

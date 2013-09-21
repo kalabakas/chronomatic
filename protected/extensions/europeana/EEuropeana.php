@@ -63,6 +63,41 @@ class EEuropeana extends CApplicationComponent
      */
     public function search($term)
     {
+        $response = (object)$this->_internalSearch($term);
+        $data = array();
+        if($response->itemsCount > 0) {
+            foreach($response->items as $item)
+            {
+                $data[] = $this->prepareItem($item);
+            }
+        }
+        return new CArrayDataProvider($data);
+    }
+    
+    protected function prepareItem($item)
+    {
+        $item = (object)$item;
+        //Prepare item 
+        $eItem   = new EEuropeanaItem();
+        $mapAttr = $eItem->mapAttributes();
+        foreach($eItem->attributeNames() as $attr)
+        {
+            $key = (array_key_exists($attr,$mapAttr)) ? $mapAttr[$attr] : $attr;
+            if(isset($item->{$key})) {
+                if(is_array($item->{$key})) {
+                    $eItem->{$attr} = array_pop($item->{$key});
+                } else {
+                    $eItem->{$attr} = $item->{$key};
+                }
+            }
+        }
+        return $eItem;
+    }
+    /**
+     * @return array raw data from europeana
+     **/
+    private function _internalSearch($term)
+    {
         if(!($term instanceof EEuropeanaSearch)) {
             $term = http_build_query(array('query'=>$term));
         }
