@@ -4,54 +4,29 @@ $this->breadcrumbs=array(
 	$model->title,
 );
 $timeLineId = "timeline-{$model->id}";
-echo CHtml::tag('div', array('id'=>$timeLineId), '');
-Yii::app()->clientScript->registerScriptFile('https://raw.github.com/NUKnightLab/TimelineJS/master/build/js/storyjs-embed.js', CClientScript::POS_HEAD);
-$script =<<<EOF
-var timeline = {
-"timeline":
-{
-"headline":"The Main Timeline Headline Goes here",
-"type":"default",
-"text":"<p>Intro body text goes here, some HTML is ok</p>",
-"asset": {
-"media":"http://twitter.com/ArjunaSoriano/status/164181156147900416",
-"credit":"Credit Name Goes Here",
-"caption":"Caption text goes here"
-},
-"date": [
-{
-"startDate":"2011,12,10",
-"endDate":"2011,12,11",
-"headline":"Headline Goes Here",
-"text":"<p>Body text goes here, some HTML is OK</p>",
-"tag":"This is Optional",
-"classname":"optionaluniqueclassnamecanbeaddedhere",
-"asset": {
-"media":"http://twitter.com/ArjunaSoriano/status/164181156147900416",
-"thumbnail":"optional-32x32px.jpg",
-"credit":"Credit Name Goes Here",
-"caption":"Caption text goes here"
-}
-}
-],
-"era": [
-{
-"startDate":"2011,12,10",
-"endDate":"2011,12,11",
-"headline":"Headline Goes Here",
-"text":"<p>Body text goes here, some HTML is OK</p>",
-"tag":"This is Optional"
-}
+$url = $this->createUrl('timeline/view',array('id'=>time(),'json'=>1));
+echo CHtml::tag('div', array('id'=>'timeline-embed'),'');//$timeLineId), '');
 
-]
+$script =<<<EOF
+var timeline_config = {
+    width:  "100%",
+    height:   "100%",
+    debug:    false,
+    source:   '/index.php?r=timeline/test',
+    font:   'NewsCycle-Merriweather' 
 }
-};
+EOF;
+echo CHtml::tag('script',array('type'=>'text/javascript'), $script);
+echo CHtml::tag('script',array('type'=>'text/javascript', 'src'=>'http://timeline.verite.co/lib/timeline/js/storyjs-embed.js'));
+//Yii::app()->clientScript->registerScript('views.timeline.view',$script);
+//Yii::app()->clientScript->registerScriptFile('http://timeline.verite.co/lib/timeline/js/storyjs-embed.js');//, CClientScript::POS_END);
+/**
+$script =<<<EO
 createStoryJS({
     type:       'timeline',
     width:      '800',
     height:     '600',
-    source:     timeline,
+    source:     '$url',
     embed_id:   '$timeLineId'
 });
 EOF;
-Yii::app()->clientScript->registerScript('views.timeline.view',$script, CClientScript::POS_READY);

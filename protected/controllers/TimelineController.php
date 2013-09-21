@@ -36,7 +36,7 @@ class TimelineController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','admin','delete', 'add'),
+				'actions'=>array('create','update','admin','delete', 'add','test'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -89,13 +89,68 @@ class TimelineController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView($id,$json=null)
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+        if($json==null) {
+            $this->render('view',array(
+                'model'=>$this->loadModel($id),
+            ));
+        } else {
+            //$this->renderTimelineJSON();//$this->loadModel($id));
+        }
 	}
-    
+    public function actionTest()//$timeline)
+    {
+        header('Content-type: application/json');
+        echo file_get_contents('http://timeline.verite.co/lib/timeline/data.json');
+/**        $this->renderJSON(array(
+            'timeline' => (object)array(
+                'headline' =>'dafuq',// $timeline->title,
+                'type'     => 'default',
+                'text'     => '',
+                /**'startDate'=> '2012,1,26',
+                'endDate'  => '2013,1,10',
+                'date'     => array(
+                    array(
+                        'startDate'=>'2012,1,26',
+                        'endDate'  =>'2012,1,26',
+                        'headline' => 'test',
+                        'text'     => 'text',
+                        'asset'    => array(
+                            'media'=>'',
+                            'credit'=>'',
+                            'caption'=>'',
+                        )
+                    )
+                ),
+                'era' => array(
+                    'startDate' => '2011,12,10',
+                    'endDate'   => '2011,12,11',
+                    'headline'  => 'test',
+                    'tag'
+                )
+            )
+        ),true,200);**/
+    }
+/**"era": [
+{
+"startDate":"2011,12,10",
+"endDate":"2011,12,11",
+"headline":"Headline Goes Here",
+"tag":"This is Optional"
+}
+
+],
+"chart": [
+{
+"startDate":"2011,12,10",
+"endDate":"2011,12,11",
+"headline":"Headline Goes Here",
+"value":"28"
+}
+
+]**/
+
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
