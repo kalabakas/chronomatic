@@ -71,7 +71,11 @@ class EEuropeana extends CApplicationComponent
                 $data[] = $this->prepareItem($item);
             }
         }
-        return new CArrayDataProvider($data);
+        //echo var_dump($response); die;
+        return new CArrayDataProvider($data, array (
+						'totalItemCount'=>$response->totalResults
+						));
+						
     }
     
     protected function prepareItem($item)

@@ -2,7 +2,10 @@
 class EEuropeanaSearch extends CFormModel
 {
     private $onlyWithThumbs = true;
-    
+    private $rows = 10;
+
+    public $page; //not initial value, only if is set then ask for the correct page
+
     public $term;
 
     public $provider; //Europeana, Natural Europe
@@ -36,11 +39,16 @@ class EEuropeanaSearch extends CFormModel
 	$params = ''.$query.'&'.$yearRange;
 	if ($this->imageOnly){ 
 	    $params .= '&TYPE:IMAGE';
-    	};
+    	}
 	
 	if ($this->onlyWithThumbs) {
 	    $params .= '&edmPreview:*';
 	}
+
+	$start = (isset($this->page)) ? '&start='.(($this->rows*$this->page)-$this->rows) : '';
+	$pagination = $start.'&rows='.$this->rows;
+	$params .= $pagination;
+	error_log($params);
 	return $params;
     }
 }

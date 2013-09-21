@@ -6,10 +6,14 @@ class SearchController extends Controller
 	{
         $model = new EEuropeanaSearch();
 
-        if(isset($_POST['EEuropeanaSearch'])) {
-            $model->attributes = $_POST['EEuropeanaSearch'];
+        if(isset($_GET['EEuropeanaSearch'])) {
+            $model->attributes = $_GET['EEuropeanaSearch'];
+            if (isset($_GET['page'])) {
+	        $model->page = $_GET['page'];
+            }
 	    if ($model->validate()){
             $data = Yii::app()->europeana->search($model);
+//error_log(count($data->getData()));
 	    }
         }
 		$this->render('index', array(

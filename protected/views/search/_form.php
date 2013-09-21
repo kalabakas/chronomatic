@@ -4,6 +4,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'type'=>'search',
     'htmlOptions'=>array('class'=>'well'),
     'inlineErrors'=>true,
+    'method'=>'GET',
 ));
 echo $form->errorSummary($model);
 echo $form->error($model,'term');
