@@ -2,17 +2,17 @@
 
 class SearchController extends Controller
 {
-    private $_timelineId;
+    private $_timeline;
 
-    public function getTimelineId()
+    public function getTimeline()
     {
-        if($this->_timelineId==null) {
+        if($this->_timeline==null) {
             if(!isset($_GET['timeline'])) {
                 throw new CHttpException(404, 'Timeline id not set');
             }
-            $this->_timelineId = $_GET['timeline'];
+            $this->_timeline = Timeline::model()->findByPk((int)$_GET['timeline']);
         }
-        return $this->_timelineId;
+        return $this->_timeline;
     }
 
 	public function actionIndex($timeline)

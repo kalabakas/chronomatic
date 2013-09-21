@@ -8,7 +8,7 @@ echo CHtml::tag('p',array(),$content);
 
 $form = $this->beginWidget('CActiveForm', array(
     'id'=>"add-item-".uniqid(),
-    'action' => array('timeline/add', 'id'=>$this->timelineId, 'eid'=>$data->id),
+    'action' => array('timeline/add', 'id'=>$this->timeline->id, 'eid'=>$data->id),
 ));
 $model = new Item();
 $model->attributes = $data->attributes;
