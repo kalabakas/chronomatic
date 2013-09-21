@@ -11,7 +11,7 @@ class TimelineController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	public $layout=null;//'//layouts/column2';
 
 	/**
 	 * @return array action filters
@@ -36,7 +36,7 @@ class TimelineController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','admin','delete', 'add','test'),
+				'actions'=>array('create','update','admin','delete', 'add','remove','test'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -60,7 +60,10 @@ class TimelineController extends Controller
                 $added = $this->timeline->add($item->itemId);
             }
         }
-        $this->renderJSON(array('added'=>$added));
+        $this->renderJSON(array(
+            'added'  => $added,
+            'action' => $this->createUrl('timeline/remove', array('id'=>$id, 'eid'=>$eid))
+        ));
     }
     //VALIDATE
     public function actionRemove($id,$eid)
@@ -69,10 +72,13 @@ class TimelineController extends Controller
         if(($item=Item::model()->findByEuropeanaId($eid))!==null) {
             $rows = TimelineItem::model()->deleteByPk(array(
                 'timeline' => $this->timeline->id,
-                'item'     => $this->itemId,
+                'item'     => $item->itemId,
             ));
         }
-        $this->renderJSON(array('removed'=>($rows>0)));
+        $this->renderJSON(array(
+            'removed'=>($rows>0),
+            'action' => $this->createUrl('timeline/add', array('id'=>$id, 'eid'=>$eid)),
+        ));
     }
 
     public function getTimeline()
@@ -278,6 +284,7 @@ class TimelineController extends Controller
 	 */
 	public function actionIndex()
 	{
+        $this->layout=null;
 		$dataProvider=new CActiveDataProvider('Timeline');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,

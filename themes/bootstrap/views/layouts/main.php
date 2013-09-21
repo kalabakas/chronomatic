@@ -43,9 +43,11 @@
 	<div class="clear"></div>
 
 	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
-		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
+        <p><small>
+            Copyright &copy; <?php echo date('Y'); ?> by Chronomatic.
+            All Rights Reserved. 
+            <?php echo Yii::powered(); ?></small>
+        </p>
 	</div><!-- footer -->
 
 </div><!-- page -->

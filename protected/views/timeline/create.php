@@ -4,10 +4,10 @@ $this->breadcrumbs=array(
 	'Create',
 );
 
-$this->menu=array(
+/**$this->menu=array(
 	array('label'=>'List Timeline','url'=>array('index')),
 	array('label'=>'Manage Timeline','url'=>array('admin')),
-);
+);**/
 ?>
 
 <h1>Create Timeline</h1>
