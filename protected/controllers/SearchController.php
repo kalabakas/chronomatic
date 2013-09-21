@@ -8,9 +8,11 @@ class SearchController extends Controller
 
         if(isset($_POST['EEuropeanaSearch'])) {
             $model->attributes = $_POST['EEuropeanaSearch'];
+            $data = Yii::app()->europeana->search($model);
         }
 		$this->render('index', array(
-            'model' => $model
+            'model' => $model,
+            'data'  => (isset($data)) ? $data : null,
         ));
 	}
 
