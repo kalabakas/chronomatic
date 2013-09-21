@@ -43,7 +43,6 @@ class Controller extends CController
             header('HTTP/1.0 '.$status);
             $this->layout = false;
             echo CJSON::encode($data);
-            $this->disableLogOutput=true;
             if($endApplication) {
                 $this->afterAction($this->action);
                 Yii::app()->end();
