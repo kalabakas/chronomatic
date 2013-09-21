@@ -11,6 +11,8 @@ class EEuropeanaItem extends CModel
 
     public $thumb;
 
+    public $year;
+
     public function rules()
     {
         return array(
@@ -24,6 +26,7 @@ class EEuropeanaItem extends CModel
             'title',
             'type',
             'thumb',
+	    'year',
         );
     }
     public function mapAttributes()
