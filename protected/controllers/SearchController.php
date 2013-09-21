@@ -8,6 +8,9 @@ class SearchController extends Controller
 
         if(isset($_POST['EEuropeanaSearch'])) {
             $model->attributes = $_POST['EEuropeanaSearch'];
+	    if ($model->validate()){
+            	echo $model;die;
+	    }
         }
 		$this->render('index', array(
             'model' => $model
