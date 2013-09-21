@@ -102,35 +102,89 @@ class TimelineController extends Controller
     public function actionTest()//$timeline)
     {
         header('Content-type: application/json');
-        echo file_get_contents('http://timeline.verite.co/lib/timeline/data.json');
-/**        $this->renderJSON(array(
+        //echo file_get_contents('http://timeline.verite.co/lib/timeline/data.json');
+        $this->renderJSON(array(
             'timeline' => (object)array(
                 'headline' =>'dafuq',// $timeline->title,
                 'type'     => 'default',
-                'text'     => '',
-                /**'startDate'=> '2012,1,26',
-                'endDate'  => '2013,1,10',
-                'date'     => array(
+                'text'     => '<scsdz',
+                'startDate'=> '2000',
+                //'endDate'  => '2013',
+                'asset'    =>  array(
+                    'media'=> 'http://2.bp.blogspot.com/-dxJbW0CG8Zs/TmkoMA5-cPI/AAAAAAAAAqw/fQpsz9GpFdo/s1600/voyage-dans-la-lune-1902-02-g.jpg',
+                    'credit'=> 'foo',
+                    'caption'=> 'foo'
+                ),
+                'date'=> array(
                     array(
-                        'startDate'=>'2012,1,26',
-                        'endDate'  =>'2012,1,26',
+                        'startDate'=>'2001',
+                        //'endDate'  =>'2012',
                         'headline' => 'test',
                         'text'     => 'text',
                         'asset'    => array(
-                            'media'=>'',
-                            'credit'=>'',
-                            'caption'=>'',
+                            'media' => "http://en.wikipedia.org/wiki/A_Trip_to_the_Moon",
+                            'credit' => "",
+                            'caption' => ""
                         )
-                    )
+                    ),
+                    array(
+                        'startDate'=>'2002',
+                        //'endDate'  =>'2012',
+                        'headline' => 'test',
+                        'text'     => 'text',
+                        'asset'    => array(
+                            'media' => "http://en.wikipedia.org/wiki/A_Trip_to_the_Moon",
+                            'credit' => "",
+                            'caption' => ""
+                        )
+                    ),
+                    array(
+                        'startDate'=>'2003',
+                        //'endDate'  =>'2012',
+                        'headline' => 'test',
+                        'text'     => 'text',
+                        'asset'    => array(
+                           'media' => "http://en.wikipedia.org/wiki/A_Trip_to_the_Moon",
+                            'credit' => "",
+                            'caption' => ""
+                        )
+                    ),
+                    array(
+                        'startDate'=>'2004',
+                        //'endDate'  =>'2012',
+                        'headline' => 'test',
+                        'text'     => 'text',
+                        'asset'    => array(
+                            'media' => "http://en.wikipedia.org/wiki/A_Trip_to_the_Moon",
+                            'credit' => "",
+                            'caption' => ""
+                        )
+                    ),
+                    array(
+                        'startDate'=>'2005',
+                        //'endDate'  =>'2012',
+                        'headline' => 'test',
+                        'text'     => 'text',
+                        'asset'    => array(
+                            'media' => "http://en.wikipedia.org/wiki/A_Trip_to_the_Moon",
+                            'credit' => "",
+                            'caption' => ""
+                        )
+                    ),
+                    array(
+                        'startDate'=>'2006',
+                        //'endDate'  =>'2012',
+                        'headline' => 'test',
+                        'text'     => 'text',
+                        'asset'    => array(
+                           'media' => "http://en.wikipedia.org/wiki/A_Trip_to_the_Moon",
+                            'credit' => "",
+                            'caption' => ""
+                        )
+                    ),
                 ),
-                'era' => array(
-                    'startDate' => '2011,12,10',
-                    'endDate'   => '2011,12,11',
-                    'headline'  => 'test',
-                    'tag'
-                )
-            )
-        ),true,200);**/
+            ),
+        ),true,200);
     }
 /**"era": [
 {
