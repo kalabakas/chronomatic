@@ -110,16 +110,23 @@ class TimelineController extends Controller
     {
         //header('Content-type: application/json');
         //echo file_get_contents('http://timeline.verite.co/lib/timeline/data.json');
+        $item = $timeline->items;
+        $item = array_pop($item);
         $this->renderJSON(array(
             'timeline' => (object)array(
                 'headline' => $timeline->title,
                 'type'     => 'default',
                 'text'     => 'Description to be added',
-                'startDate'=> '2000',//$timeline->minYear,
-                //'endDate'  => $timeline->maxYear,
+                'startDate'=> date('Y,1,1',strtotime($timeline->minYear)),
+                'endDate'  => date('Y,1,1',strtotime($timeline->maxYear)),
+                'asset'    => array(
+                    'media' =>$item->thumb,
+                    'credit' => "",
+                    'caption' => ""
+                ),
                 'date'=> array_map(function($item) {
                     return array(
-                        'startDate'=>'2001',//(int)$item->year,
+                        'startDate'=>$item->year,
                         'headline' =>$item->title,
                         'text'     => 'text',
                         'asset'    => array(
