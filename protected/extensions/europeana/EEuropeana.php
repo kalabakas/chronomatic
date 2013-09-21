@@ -83,10 +83,12 @@ class EEuropeana extends CApplicationComponent
         foreach($eItem->attributeNames() as $attr)
         {
             $key = (array_key_exists($attr,$mapAttr)) ? $mapAttr[$attr] : $attr;
-            if(is_array($item->{$attr})) {
-                $eItem->{$attr} = array_pop($item->{$attr});
-            } else {
-                $eItem->{$attr} = $item->{$key};
+            if(isset($item->{$key})) {
+                if(is_array($item->{$key})) {
+                    $eItem->{$attr} = array_pop($item->{$key});
+                } else {
+                    $eItem->{$attr} = $item->{$key};
+                }
             }
         }
         return $eItem;
