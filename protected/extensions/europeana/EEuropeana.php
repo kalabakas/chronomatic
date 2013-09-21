@@ -61,9 +61,11 @@ class EEuropeana extends CApplicationComponent
     /**
      * TODO: $term must something more complex than string
      */
-    public function search($term='paris')
+    public function search($term)
     {
-        $query = 'search.json?'.http_build_query(array('query'=>$term));
-        return $this->client->get($query)->send()->json();
+        if(!($term instanceof EEuropeanaSearch)) {
+            $term = http_build_query(array('query'=>$term));
+        }
+        return $this->client->get("search.json?{$term}")->send()->json();
     }
 }
