@@ -63,6 +63,24 @@ class EEuropeana extends CApplicationComponent
      */
     public function search($term)
     {
+        $data = array();
+        foreach($this->_internalSearch($term) as $item)
+        {
+            $data[] = $this->prepareItem($item);
+        }
+        return new CArrayDataProvider($data);
+    }
+    
+    protected function prepareItem($item)
+    {
+        //Prepare item for display
+        return $item;
+    }
+    /**
+     * @return array raw data from europeana
+     **/
+    private function _internalSearch()
+    {
         if(!($term instanceof EEuropeanaSearch)) {
             $term = http_build_query(array('query'=>$term));
         }
