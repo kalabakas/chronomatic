@@ -14,4 +14,8 @@ class EEuropeanaSearch extends CFormModel
             array('term', 'required')
         );
     }
+    public function __toString()
+    {
+        return http_build_query(array('query'=>$this->term));
+    }
 }

@@ -1,5 +1,8 @@
+<div class="row">
 <?php
-foreach($provider->getData() as $data)
-{
-    CVarDumper::dump($data->attributes,10,1);
-}
+$this->widget('zii.widgets.CListView', array(
+    'dataProvider' => $provider,
+    'itemView'     => '_item',
+));
+?>
+</div>
