@@ -4,4 +4,5 @@
 }
 .list-view .search-item-thumb
 {
+    max-height: 180px;
 }
