@@ -7,9 +7,10 @@
  * @property integer $id
  * @property string $user
  * @property string $title
- * @property string $created_at
- * @property string $updated_at
+ * @property string $createdAt
+ * @property string $updatedAt
  * @property integer $public
+ * @property integer $cloneOf
  */
 class Timeline extends CActiveRecord
 {
@@ -29,35 +30,47 @@ class Timeline extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('public', 'numerical', 'integerOnly'=>true),
+            array('user', 'required'),
+			array('public, cloneOf', 'numerical', 'integerOnly'=>true),
 			array('user, title', 'length', 'max'=>255),
-			array('created_at, updated_at', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user, title, created_at, updated_at, public', 'safe', 'on'=>'search'),
+            array('id, user, createAt, updatedAt, public, cloneOf', 'unsafe'),
+			array('id, user, title, createdAt, updatedAt, public, cloneOf', 'safe', 'on'=>'search'),
 		);
 	}
-    public function beforeSave()
-    {
-        $date = date('Y-m-d H:i:s', time());
-        if($this->isNewRecord) {
-            $this->created_at = $this->updated_at = $date;
-        } else {
-            $this->updated_at =  $date;
-        }
-        unset($date);
-        return parent::beforeSave();
-    }
+
 	/**
 	 * @return array relational rules.
 	 */
 	public function relations()
 	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
 		return array(
 		);
 	}
+
+    public function beforeSave()
+    {
+        $at = date('Y-m-d H:i:s', time());
+        if($this->isNewRecord) {
+            $this->createdAt = $this->updatedAt = $at ;
+        } else {
+            $this->updatedAt = $at;
+        }
+        return parent::beforeSave();
+    }
+
+    /**
+     * Add item to this timeline
+     **/
+    public function add($item)
+    {
+        $timelineItem = new TimelineItem();
+        $timelineItem->timeline = $this->id;
+        $timelineItem->item     = ($item instanceof Item) ? $item->itemId : $item;
+        return $timelineItem->save();
+    }
+
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -68,9 +81,10 @@ class Timeline extends CActiveRecord
 			'id' => 'ID',
 			'user' => 'User',
 			'title' => 'Title',
-			'created_at' => 'Created At',
-			'updated_at' => 'Updated At',
+			'createdAt' => 'Created At',
+			'updatedAt' => 'Updated At',
 			'public' => 'Public',
+			'cloneOf' => 'Clone Of',
 		);
 	}
 
@@ -95,9 +109,10 @@ class Timeline extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('user',$this->user,true);
 		$criteria->compare('title',$this->title,true);
-		$criteria->compare('created_at',$this->created_at,true);
-		$criteria->compare('updated_at',$this->updated_at,true);
+		$criteria->compare('createdAt',$this->createdAt,true);
+		$criteria->compare('updatedAt',$this->updatedAt,true);
 		$criteria->compare('public',$this->public);
+		$criteria->compare('cloneOf',$this->cloneOf);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

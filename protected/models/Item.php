@@ -62,6 +62,23 @@ class Item extends CActiveRecord
 			'createdAt' => 'Created At',
 		);
 	}
+   
+    public function withEuropeanaId($id)
+    {
+        $this->getDbCriteria()->compare('id',$id);
+        return $this;
+    }
+    public function findByEuropeanaId($id, $condition='', $params=array())
+    {
+        return $this->withEuropeanaId($id)->find($condition, $params);
+    }
+    public function beforeSave()
+    {
+        if($this->isNewRecord) {
+            $this->createdAt = date('Y-m-d H:i:s', time());
+        }
+        return parent::beforeSave();
+    }
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.

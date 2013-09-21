@@ -10,4 +10,4 @@ $this->breadcrumbs=array(
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
 <?php if($data!==null) {
     $this->renderPartial('_list', array('provider'=>$data));
-}?>
+}

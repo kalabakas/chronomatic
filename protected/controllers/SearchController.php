@@ -2,7 +2,20 @@
 
 class SearchController extends Controller
 {
-	public function actionIndex()
+    private $_timelineId;
+
+    public function getTimelineId()
+    {
+        if($this->_timelineId==null) {
+            if(!isset($_GET['timeline'])) {
+                throw new CHttpException(404, 'Timeline id not set');
+            }
+            $this->_timelineId = $_GET['timeline'];
+        }
+        return $this->_timelineId;
+    }
+
+	public function actionIndex($timeline)
 	{
         $model = new EEuropeanaSearch();
 
