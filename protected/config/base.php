@@ -17,6 +17,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+        'ext.europeana.*',
 	),
 
 	'modules'=>array(
@@ -27,7 +28,7 @@ return array(
                 'bootstrap.gii',
             ),
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			//'ipFilters'=>array('127.0.0.1','::1'),
+			'ipFilters'=>array('*','127.0.0.1','::1'),
         ),
 	),
 

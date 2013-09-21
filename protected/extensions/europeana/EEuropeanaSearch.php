@@ -6,7 +6,7 @@ class EEuropeanaSearch extends CFormModel
     public $type;
 
     public $from = 0;
-    public $to   = date('Y', time());
+    public $to   = 2014;
 
     public function rules()
     {
