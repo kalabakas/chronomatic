@@ -14,6 +14,8 @@
  */
 class Timeline extends CActiveRecord
 {
+    private $_minYear;
+    private $_maxYear;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -46,6 +48,8 @@ class Timeline extends CActiveRecord
 	public function relations()
 	{
 		return array(
+            'timelineItems'=>array(self::HAS_MANY, 'TimelineItem','timeline'),
+            'items'        =>array(self::HAS_MANY, 'Item',array('item'=>'itemId'),'through'=>'timelineItems'),
 		);
 	}
 
@@ -129,4 +133,38 @@ class Timeline extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+    public function getMaxYear()
+    {
+        if($this->_maxYear===null) {
+            $this->_maxYear=$this->_queryScalarYear('max');
+        }
+        return $this->_maxYear;
+    }
+    public function getMinYear()
+    {
+        if($this->_minYear===null) {
+            $this->_minYear=$this->_queryScalarYear('min');
+        }
+        return $this->_minYear;
+    }
+    private function _queryScalarYear($type)
+    {
+        $type=strtoupper($type);
+        if(!in_array($type,array('MIN','MAX'))) {
+            return null;
+        }
+        return $this->getDbConnection()->createCommand("SELECT {$type}(year) FROM items i INNER JOIN timeline_items ti ON ti.item=i.itemId WHERE ti.timeline=:timeline")->queryScalar(array(
+            ':timeline'=>$this->id
+        ));
+    }
+    public function ofUser($user)
+    {
+        $this->getDbCriteria()->compare('user',$user);
+        return $this;
+    }
+    public function lastEdited()
+    {
+        $this->getDbCriteria()->order = 'updatedAt DESC';
+        return $this;
+    }
 }

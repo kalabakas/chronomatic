@@ -102,114 +102,36 @@ class TimelineController extends Controller
                 'model'=>$this->loadModel($id),
             ));
         } else {
-            //$this->renderTimelineJSON();//$this->loadModel($id));
+            $this->renderTimelineJSON($this->loadModel($id));
         }
 	}
-    public function actionTest()//$timeline)
+    //public function actionTest()//$timeline)
+    public function renderTimelineJSON($timeline)
     {
-        header('Content-type: application/json');
+        //header('Content-type: application/json');
         //echo file_get_contents('http://timeline.verite.co/lib/timeline/data.json');
         $this->renderJSON(array(
             'timeline' => (object)array(
-                'headline' =>'dafuq',// $timeline->title,
+                'headline' => $timeline->title,
                 'type'     => 'default',
-                'text'     => '<scsdz',
-                'startDate'=> '2000',
-                //'endDate'  => '2013',
-                'asset'    =>  array(
-                    'media'=> 'http://2.bp.blogspot.com/-dxJbW0CG8Zs/TmkoMA5-cPI/AAAAAAAAAqw/fQpsz9GpFdo/s1600/voyage-dans-la-lune-1902-02-g.jpg',
-                    'credit'=> 'foo',
-                    'caption'=> 'foo'
-                ),
-                'date'=> array(
-                    array(
-                        'startDate'=>'2001',
-                        //'endDate'  =>'2012',
-                        'headline' => 'test',
+                'text'     => 'Description to be added',
+                'startDate'=> '2000',//$timeline->minYear,
+                //'endDate'  => $timeline->maxYear,
+                'date'=> array_map(function($item) {
+                    return array(
+                        'startDate'=>'2001',//(int)$item->year,
+                        'headline' =>$item->title,
                         'text'     => 'text',
                         'asset'    => array(
-                            'media' => "http://en.wikipedia.org/wiki/A_Trip_to_the_Moon",
+                            'media' =>$item->thumb,
                             'credit' => "",
                             'caption' => ""
                         )
-                    ),
-                    array(
-                        'startDate'=>'2002',
-                        //'endDate'  =>'2012',
-                        'headline' => 'test',
-                        'text'     => 'text',
-                        'asset'    => array(
-                            'media' => "http://en.wikipedia.org/wiki/A_Trip_to_the_Moon",
-                            'credit' => "",
-                            'caption' => ""
-                        )
-                    ),
-                    array(
-                        'startDate'=>'2003',
-                        //'endDate'  =>'2012',
-                        'headline' => 'test',
-                        'text'     => 'text',
-                        'asset'    => array(
-                           'media' => "http://en.wikipedia.org/wiki/A_Trip_to_the_Moon",
-                            'credit' => "",
-                            'caption' => ""
-                        )
-                    ),
-                    array(
-                        'startDate'=>'2004',
-                        //'endDate'  =>'2012',
-                        'headline' => 'test',
-                        'text'     => 'text',
-                        'asset'    => array(
-                            'media' => "http://en.wikipedia.org/wiki/A_Trip_to_the_Moon",
-                            'credit' => "",
-                            'caption' => ""
-                        )
-                    ),
-                    array(
-                        'startDate'=>'2005',
-                        //'endDate'  =>'2012',
-                        'headline' => 'test',
-                        'text'     => 'text',
-                        'asset'    => array(
-                            'media' => "http://en.wikipedia.org/wiki/A_Trip_to_the_Moon",
-                            'credit' => "",
-                            'caption' => ""
-                        )
-                    ),
-                    array(
-                        'startDate'=>'2006',
-                        //'endDate'  =>'2012',
-                        'headline' => 'test',
-                        'text'     => 'text',
-                        'asset'    => array(
-                           'media' => "http://en.wikipedia.org/wiki/A_Trip_to_the_Moon",
-                            'credit' => "",
-                            'caption' => ""
-                        )
-                    ),
-                ),
+                    );
+                }, $timeline->items),
             ),
         ),true,200);
     }
-/**"era": [
-{
-"startDate":"2011,12,10",
-"endDate":"2011,12,11",
-"headline":"Headline Goes Here",
-"tag":"This is Optional"
-}
-
-],
-"chart": [
-{
-"startDate":"2011,12,10",
-"endDate":"2011,12,11",
-"headline":"Headline Goes Here",
-"value":"28"
-}
-
-]**/
 
 	/**
 	 * Creates a new model.
@@ -285,7 +207,10 @@ class TimelineController extends Controller
 	public function actionIndex()
 	{
         $this->layout=null;
-		$dataProvider=new CActiveDataProvider('Timeline');
+		$dataProvider=new CActiveDataProvider(Timeline::model()
+            ->ofUser(Yii::app()->user->id)
+            ->lastEdited()
+        );
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));

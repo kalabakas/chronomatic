@@ -30,7 +30,8 @@ class Item extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('id, title, type, thumb', 'length', 'max'=>255),
-			array('createdAt', 'safe'),
+            array('year', 'safe'),
+			array('createdAt', 'unsafe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('itemId, id, title, type, thumb, createdAt', 'safe', 'on'=>'search'),
