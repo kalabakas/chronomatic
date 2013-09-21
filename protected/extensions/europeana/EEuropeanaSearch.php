@@ -1,6 +1,8 @@
 <?php
 class EEuropeanaSearch extends CFormModel
 {
+    private $onlyWithThumbs = true;
+    
     public $term;
 
     public $provider; //Europeana, Natural Europe
@@ -27,14 +29,18 @@ class EEuropeanaSearch extends CFormModel
         );
     }
     public function __toString() {
-	$subject= ($this->type == '*') ? '' : $this->type.':' ;
- 	$query='query='.$subject.$this->term;
-	$yearRange='qf=YEAR:['.$this->from.' TO '.$this->to.']';
+	$subject = ($this->type == '*') ? '' : $this->type.':' ;
+ 	$query = 'query='.$subject.$this->term;
+	$yearRange = 'qf=YEAR:['.$this->from.' TO '.$this->to.']';
 
 	$params = ''.$query.'&'.$yearRange;
 	if ($this->imageOnly){ 
-	    $params.='&TYPE:IMAGE';
+	    $params .= '&TYPE:IMAGE';
     	};
+	
+	if ($this->onlyWithThumbs) {
+	    $params .= '&edmPreview:*';
+	}
 	return $params;
     }
 }
