@@ -5,7 +5,7 @@ $this->breadcrumbs=array(
 	'Search',
 );
 ?>
-<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>
+<h1><?php echo "Add items to '{$this->timeline->title}'"; ?>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
 <?php if($data!==null) {

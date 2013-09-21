@@ -3,7 +3,8 @@
 if(($img=$data->thumb)!==null) {
     echo CHtml::image($img, $data->title, array('class'=>'img-rounded search-item-thumb'));
 }
-echo CHtml::tag('p',array('class'=>'lead'), $data->title);
+$content = CHtml::encode($data->title)." - ".CHtml::tag('small',array(),$data->year);
+echo CHtml::tag('p',array(),$content);
 
 $form = $this->beginWidget('CActiveForm', array(
     'id'=>"add-item-".uniqid(),
